@@ -1,18 +1,19 @@
-#include "modules/atlas/world_generator.h"
+#include "modules/atlas/atlas_world_generator.h"
 
 #include "core/os/os.h"
 #include "modules/opensimplex/open_simplex_noise.h"
 
-WorldGenerator::WorldGenerator() {
+Atlas_WorldGenerator::Atlas_WorldGenerator() {
 
 }
 
-WorldGenerator::~WorldGenerator() {
+Atlas_WorldGenerator::~Atlas_WorldGenerator() {
 
 }
 
-Ref<World> WorldGenerator::generate_world(int x, int y, int h) {
-    World world (x, y);
+Ref<Atlas_World> Atlas_WorldGenerator::generate_world(int x, int y, int h) {
+    Atlas_World world;
+    world.initialize(x, y);
 
     OpenSimplexNoise noise_generator;
     double seed = OS::get_singleton()->get_unix_time();
@@ -27,10 +28,9 @@ Ref<World> WorldGenerator::generate_world(int x, int y, int h) {
         }
     }
 
-    return Ref<World>(&world);
+    return Ref<Atlas_World>(&world);
 }
 
-void WorldGenerator::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("generate_world", "x", "y", "h"), &WorldGenerator::generate_world);
-    //ClassDB::bind_method(D_METHOD("generate_world"), &WorldGenerator::generate_world);
+void Atlas_WorldGenerator::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("generate_world", "x", "y", "h"), &Atlas_WorldGenerator::generate_world);
 }

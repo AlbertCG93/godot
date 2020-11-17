@@ -1,17 +1,21 @@
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef ATLAS_WORLD_H
+#define ATLAS_WORLD_H
 
 #include "core/reference.h"
 
 #include <vector>
 
-class World : public Reference {
-    GDCLASS(World, Reference);
+class Atlas_World : public Reference {
+    GDCLASS(Atlas_World, Reference);
 
 public:
-    World();
-    World(int x, int y);
-    ~World();
+    Atlas_World();
+    ~Atlas_World();
+
+    void initialize(int x, int y);
+
+    int get_size_x();
+    int get_size_y();
 
     void set_value(int i, int j, uint8_t value);
     uint8_t get_value(int i, int j);
