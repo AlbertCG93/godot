@@ -12,9 +12,20 @@ public:
     Atlas_WorldGenerator();
     ~Atlas_WorldGenerator();
 
-    Ref<Atlas_World> generate_world(int x, int y, int h);
+    void initialize(int octaves, float period, float persistence, float lacunarity);
+
+    Atlas_World* generate_world(int x, int y, int h);
 
 protected:
+    int octaves;
+
+    float period;
+
+    float persistence;
+    float lacunarity;
+
+    Atlas_World* world;
+
     static void _bind_methods();
 };
 

@@ -1,12 +1,12 @@
 #ifndef ATLAS_WORLD_H
 #define ATLAS_WORLD_H
 
-#include "core/reference.h"
+#include "core/object.h"
 
 #include <vector>
 
-class Atlas_World : public Reference {
-    GDCLASS(Atlas_World, Reference);
+class Atlas_World : public Object {
+    GDCLASS(Atlas_World, Object);
 
 public:
     Atlas_World();
