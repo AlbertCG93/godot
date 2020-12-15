@@ -1,6 +1,8 @@
 #ifndef ATLAS_WORLD_H
 #define ATLAS_WORLD_H
 
+#include "modules/atlas/atlas_cell.h"
+
 #include "core/object.h"
 
 #include <vector>
@@ -17,11 +19,10 @@ public:
     int get_size_x();
     int get_size_y();
 
-    void set_value(int i, int j, uint8_t value);
-    uint8_t get_value(int i, int j);
+    Atlas_Cell* get_cell(int i, int j);
 
 protected:
-    std::vector<std::vector<uint8_t>> representation;
+    std::vector<std::vector<Atlas_Cell>> world;
 
     static void _bind_methods();
 };

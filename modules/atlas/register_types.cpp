@@ -2,10 +2,12 @@
 
 #include "core/class_db.h"
 
+#include "atlas_cell.h"
 #include "atlas_world.h"
 #include "atlas_world_generator.h"
 
 void register_atlas_types() {
+    ClassDB::register_class<Atlas_Cell>();
     ClassDB::register_class<Atlas_World>();
     ClassDB::register_class<Atlas_WorldGenerator>();
 }

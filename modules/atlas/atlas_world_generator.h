@@ -25,6 +25,8 @@ protected:
     float lacunarity;
 
     Atlas_World* world;
+    
+    void generate_graph();
 
     static void _bind_methods();
 };

@@ -3,6 +3,8 @@
 #include "core/os/os.h"
 #include "modules/opensimplex/open_simplex_noise.h"
 
+#include <memory>
+
 Atlas_WorldGenerator::Atlas_WorldGenerator() {
     world = new Atlas_World();
 }
@@ -36,11 +38,29 @@ Atlas_World* Atlas_WorldGenerator::generate_world(int x, int y, int h) {
             float value = noise_generator.get_noise_2d(i, j);
             value = h * 0.5 * (1.0 + value);
 
-            world->set_value(i, j, (uint8_t) value);
+            world->get_cell(i, j)->set_height((uint8_t) value);
         }
     }
 
+    generate_graph();
+
 	return world;
+}
+
+void Atlas_WorldGenerator::generate_graph() {
+    for (int i = 0; i < world->get_size_x(); ++i) {
+        for (int j = 0; j < world->get_size_y(); ++j) {
+            Atlas_Cell* cell = world->get_cell(i, j);
+            
+            for (int k = 0; k < Atlas_Cell::CELL_ADJACENCY_SIZE; ++k) {
+                Atlas_Cell* neighbor = world->get_cell(i + Atlas_Cell::CELL_ADJACENCY_X[i], j + Atlas_Cell::CELL_ADJACENCY_Y[j]);
+
+                if (abs(cell->get_height() - neighbor->get_height()) <= 1.0 ) {
+                    cell->get_neighbors().push_back(*neighbor);
+                }
+            }
+        }
+    }
 }
 
 void Atlas_WorldGenerator::_bind_methods() {
