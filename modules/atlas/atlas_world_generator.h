@@ -14,7 +14,9 @@ public:
 
     void initialize(int octaves, float period, float persistence, float lacunarity);
 
-    Atlas_World* generate_world(int x, int y, int h);
+    Atlas_World* generate_world(uint16_t x, uint16_t y, uint8_t h);
+
+    Array calculate_path(uint16_t origin_x, uint16_t origin_y, uint16_t destination_x, uint16_t destination_y);
 
 protected:
     int octaves;

@@ -1,32 +1,44 @@
 #include "modules/atlas/atlas_world.h"
 
+
 Atlas_World::Atlas_World() {
 
 }
 
 Atlas_World::~Atlas_World() {
-
+    delete world;
 }
 
-void Atlas_World::initialize(int x, int y) {
-    world = std::vector<std::vector<Atlas_Cell>>(x, std::vector<Atlas_Cell>(y));
+void Atlas_World::initialize(uint16_t x, uint16_t y) {
+    world = new std::vector<std::vector<Atlas_Cell>>();
 }
 
-int Atlas_World::get_size_x() {
-    return world.size();
+uint16_t Atlas_World::get_size_x() {
+    return (*world).size();
 }
 
-int Atlas_World::get_size_y() {
-    return world[0].size();
+uint16_t Atlas_World::get_size_y() {
+    return (*world)[0].size();
 }
 
-Atlas_Cell* Atlas_World::get_cell(int i, int j) {
-    return &world[i][j];
+Atlas_Cell* Atlas_World::get_cell(uint16_t i, uint16_t j) {
+    return &((*world)[i][j]);
+}
+
+Atlas_Cell* Atlas_World::get_cell(uint32_t hash) {
+    uint16_t i = (hash >> 16) & (uint16_t) 0xFFFF;
+    uint16_t j = hash & (uint16_t) 0xFFFF;
+
+    return &((*world)[i][j]);
+}
+
+uint8_t Atlas_World::get_cell_height(uint16_t i, uint16_t j) {
+    return (*world)[i][j].get_height();
 }
 
 void Atlas_World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("initialize", "x", "y"), &Atlas_World::initialize);
     ClassDB::bind_method(D_METHOD("get_size_x"), &Atlas_World::get_size_x);
     ClassDB::bind_method(D_METHOD("get_size_y"), &Atlas_World::get_size_y);
-    ClassDB::bind_method(D_METHOD("get_cell", "i", "j"), &Atlas_World::get_cell);
+    ClassDB::bind_method(D_METHOD("get_cell_height", "i", "j"), &Atlas_World::get_cell_height);
 }

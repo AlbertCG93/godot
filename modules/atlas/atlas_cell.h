@@ -1,35 +1,40 @@
 #ifndef ATLAS_CELL_H
 #define ATLAS_CELL_H
 
-#include "core/array.h"
-#include "core/object.h"
-#include "core/vector.h"
+#include <vector>
 
-class Atlas_Cell : public Object {
-    GDCLASS(Atlas_Cell, Object);
+namespace Atlas_Cell_Constants {
+    extern const short CELL_ADJACENCY_SIZE;
+    
+    extern const short CELL_ADJACENCY_X[];
+    extern const short CELL_ADJACENCY_Y[];
+};
+
+class Atlas_Cell {
 
 public:
-    static const short CELL_ADJACENCY_SIZE;
-    
-    static const short CELL_ADJACENCY_X[];
-    static const short CELL_ADJACENCY_Y[];
-
-    Atlas_Cell();
+    Atlas_Cell(uint16_t x, uint16_t y);
+    Atlas_Cell(uint16_t x, uint16_t y, uint8_t height);
     ~Atlas_Cell();
-
-    Atlas_Cell(const Atlas_Cell& cell);
 
     void set_height(uint8_t value);
     uint8_t get_height();
 
-    Vector<Atlas_Cell*> get_neighbors();
+    std::vector<uint32_t>& get_neighbors();
+
+    static inline uint32_t calculate_hash(uint16_t x, uint16_t y) {
+        return (((uint32_t) x << 16) | (uint32_t) y);
+    }
 
 protected:
-    uint8_t height = 0;
+    uint16_t x;
+    uint16_t y;
 
-    Vector<Atlas_Cell*> neighbors;
+    uint8_t height;
 
-    static void _bind_methods();
+    std::vector<uint32_t> neighbors;
+
+    friend class Atlas_AStar;
 };
 
 #endif

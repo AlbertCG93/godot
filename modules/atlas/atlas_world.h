@@ -3,6 +3,7 @@
 
 #include "modules/atlas/atlas_cell.h"
 
+#include "core/array.h"
 #include "core/object.h"
 
 #include <vector>
@@ -14,17 +15,22 @@ public:
     Atlas_World();
     ~Atlas_World();
 
-    void initialize(int x, int y);
+    void initialize(uint16_t x, uint16_t y);
 
-    int get_size_x();
-    int get_size_y();
+    uint16_t get_size_x();
+    uint16_t get_size_y();
 
-    Atlas_Cell* get_cell(int i, int j);
+    Atlas_Cell* get_cell(uint16_t i, uint16_t j);
+    Atlas_Cell* get_cell(uint32_t hash);
+
+    uint8_t get_cell_height(uint16_t i, uint16_t j);
 
 protected:
-    std::vector<std::vector<Atlas_Cell>> world;
+    std::vector<std::vector<Atlas_Cell>>* world;
 
     static void _bind_methods();
+
+    friend class Atlas_WorldGenerator;
 };
 
 #endif
